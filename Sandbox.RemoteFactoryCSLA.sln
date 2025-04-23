@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteFactoryCSLA", "RemoteFactoryCSLA\RemoteFactoryCSLA.csproj", "{3C06FA47-02D8-4EE5-AD40-F5AD80DAF83B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C06FA47-02D8-4EE5-AD40-F5AD80DAF83B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C06FA47-02D8-4EE5-AD40-F5AD80DAF83B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C06FA47-02D8-4EE5-AD40-F5AD80DAF83B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C06FA47-02D8-4EE5-AD40-F5AD80DAF83B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D6DEA2EC-2553-48BF-8D0F-7BE3E6B0DF96}
+	EndGlobalSection
+EndGlobal
