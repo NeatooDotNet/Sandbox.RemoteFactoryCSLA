@@ -5,7 +5,15 @@ using System.Security.Principal;
 
 namespace RemoteFactoryCSLA
 {
-    public partial class NeatooEditBase : EditBase<NeatooEditBase>
+    public interface INeatooEditBase : IEditBase
+    {
+        int Id { get; }
+        string? Description { get; set; }
+        INeatooEditBase? ChildA { get; }
+        INeatooEditBase? ChildB { get; }
+    }
+
+    internal partial class NeatooEditBase : EditBase<NeatooEditBase>, INeatooEditBase
     {
         public static uint TotalCount = 0;
 
@@ -39,8 +47,8 @@ namespace RemoteFactoryCSLA
         public int Id { get; set; }
         [Required]
         public string? Description { get; set; }
-        public NeatooEditBase? ChildA { get; set; }
-        public NeatooEditBase? ChildB { get; set; }
+        public INeatooEditBase? ChildA { get; set; }
+        public INeatooEditBase? ChildB { get; set; }
     }
 
     internal class NeatooEditBaseAuth

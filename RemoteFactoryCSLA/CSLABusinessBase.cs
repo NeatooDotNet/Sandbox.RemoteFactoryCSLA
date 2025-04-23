@@ -4,13 +4,23 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace RemoteFactoryCSLA
 {
+
+    // I can't get IDataPortal<ICSLABusinessBase> to work
+    public interface ICSLABusinessBase : Csla.IBusinessBase
+    {
+        int Id { get; }
+        string? Description { get; set; }
+        ICSLABusinessBase? ChildA { get; }
+        ICSLABusinessBase? ChildB { get; }
+    }
+
     [Serializable]
     [CslaImplementProperties]
-    internal partial class CSLABusinessBase : Csla.BusinessBase<CSLABusinessBase>
+    public partial class CSLABusinessBase : Csla.BusinessBase<CSLABusinessBase>, ICSLABusinessBase
     {
         public static uint TotalCount = 0;
 
-        [DynamicDependency(DynamicallyAccessedMemberTypes.NonPublicMethods, typeof(CSLABusinessBase))]
+        [DynamicDependency(DynamicallyAccessedMemberTypes.NonPublicMethods, typeof(ICSLABusinessBase))]
         public CSLABusinessBase()
         {
             TotalCount++;
@@ -20,13 +30,15 @@ namespace RemoteFactoryCSLA
         [ObjectAuthorizationRules]
         public static void AddObjectAuthorizationRules()
         {
-            Csla.Rules.BusinessRules.AddRule(typeof(CSLABusinessBase),
+            Csla.Rules.BusinessRules.AddRule(typeof(ICSLABusinessBase),
               new Csla.Rules.CommonRules.IsInRole(Csla.Rules.AuthorizationActions.CreateObject, "Admin"));
         }
 
+        // IDataPortal<ICSLABusinessBase> throws an exception
+
         [Create]
 
-        internal void Create([Inject] IDataPortal<CSLABusinessBase> factory)
+        private void Create([Inject] IDataPortal<CSLABusinessBase> factory)
         {
             this.Id = 1;
             this.Description = Guid.NewGuid().ToString();
@@ -35,7 +47,7 @@ namespace RemoteFactoryCSLA
         }
 
         [Create]
-        internal void Create(int id, [Inject] IDataPortal<CSLABusinessBase> factory)
+        private void Create(int id, [Inject] IDataPortal<CSLABusinessBase> factory)
         {
             this.Id = id;
             this.Description = Guid.NewGuid().ToString();
@@ -50,7 +62,7 @@ namespace RemoteFactoryCSLA
         public partial int Id { get; set; }
         [Required]
         public partial string? Description { get; set; }
-        public partial CSLABusinessBase? ChildA { get; set; }
-        public partial CSLABusinessBase? ChildB { get; set; }
+        public partial ICSLABusinessBase? ChildA { get; set; }
+        public partial ICSLABusinessBase? ChildB { get; set; }
     }
 }
