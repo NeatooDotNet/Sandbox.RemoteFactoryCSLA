@@ -15,7 +15,6 @@ public class BusinessObjectBenchmarks
     public ServiceProvider serviceProvider;
     public ClaimsPrincipal principal;
     public IDataPortal<CSLABusinessBase> cslaBBFactory;
-    public IRemoteFactoryCSLABusinessBaseFactory remoteFactory;
     public INeatooEditBaseFactory neatooFactory;
 
     public BusinessObjectBenchmarks()
@@ -35,9 +34,7 @@ public class BusinessObjectBenchmarks
             };
         });
 
-        serviceCollection.AddNeatooServices(NeatooFactory.Local, typeof(RemoteFactoryCSLABusinessBase).Assembly);
-        serviceCollection.AddTransient<RemoteFactoryCSLABusinessBase>();
-        serviceCollection.AddScoped<RemoteFactoryCSLABusinessBaseAuth>();
+        serviceCollection.AddNeatooServices(NeatooFactory.Local, typeof(NeatooEditBase).Assembly);
         serviceCollection.AddScoped<NeatooEditBaseAuth>();
         serviceCollection.AddSingleton<IPrincipal>(principal);
 
@@ -50,58 +47,48 @@ public class BusinessObjectBenchmarks
 
         var factory = serviceProvider.GetRequiredService<IDataPortalFactory>();
         cslaBBFactory = factory.GetPortal<CSLABusinessBase>();
-        remoteFactory = serviceProvider.GetRequiredService<IRemoteFactoryCSLABusinessBaseFactory>();
         neatooFactory = serviceProvider.GetRequiredService<INeatooEditBaseFactory>();
-
     }
 
     [Benchmark]
-    public uint CSLABusinessBase()
+    public CSLABusinessBase CSLABusinessBase()
     {
         RemoteFactoryCSLA.CSLABusinessBase.TotalCount = 0;
         var cslaBB = cslaBBFactory.Create();
-        return RemoteFactoryCSLA.CSLABusinessBase.TotalCount;
+        return cslaBB;
     }
 
     [Benchmark]
-    public uint RemoteFactoryCSLABusinessBase()
-    {
-        RemoteFactoryCSLA.RemoteFactoryCSLABusinessBase.TotalCount = 0;
-        var rfBB = remoteFactory.Create();
-        return RemoteFactoryCSLA.RemoteFactoryCSLABusinessBase.TotalCount;
-    }
-
-    [Benchmark]
-    public uint NeatooEditBase()
+    public INeatooEditBase NeatooEditBase()
     {
         RemoteFactoryCSLA.NeatooEditBase.TotalCount = 0;
         var neatooEdit = neatooFactory.Create();
-        return RemoteFactoryCSLA.NeatooEditBase.TotalCount;
+        return neatooEdit;
     }
 
     [Benchmark]
-    public uint DIOnly()
+    public IDIOnly DIOnly()
     {
         RemoteFactoryCSLA.DIOnly.TotalCount = 0;
         var noBase = serviceProvider.GetRequiredService<IDIOnly>();
         noBase.Create();
-        return RemoteFactoryCSLA.DIOnly.TotalCount;
+        return noBase;
     }
 
     [Benchmark]
-    public uint ConstructorOnly()
+    public Constructor ConstructorOnly()
     {
         Constructor.TotalCount = 0;
         var constructor = new Constructor(principal);
-        return Constructor.TotalCount;
+        return constructor;
     }
 
     [Benchmark]
-    public uint ActivatorCreateInstance()
+    public ActivatorCreateInstance ActivatorCreateInstance()
     {
         RemoteFactoryCSLA.ActivatorCreateInstance.TotalCount = 0;
         var activator = (ActivatorCreateInstance)Activator.CreateInstance(typeof(ActivatorCreateInstance), [principal])!;
-        return RemoteFactoryCSLA.ActivatorCreateInstance.TotalCount;
+        return activator;
     }
 
     static ClaimsPrincipal CreateDefaultClaimsPrincipal()

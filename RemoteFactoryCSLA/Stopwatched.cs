@@ -18,7 +18,8 @@ namespace RemoteFactoryCSLA
             var stopwatch = new System.Diagnostics.Stopwatch();
 
             stopwatch.Start();
-            var totalCount = benchmarks.CSLABusinessBase();
+            benchmarks.CSLABusinessBase();
+            var totalCount = CSLABusinessBase.TotalCount;
             stopwatch.Stop();
 
             //Debug.Assert(cslaBB.IsValid);
@@ -30,15 +31,8 @@ namespace RemoteFactoryCSLA
 
             stopwatch.Reset();
             stopwatch.Start();
-            totalCount = benchmarks.RemoteFactoryCSLABusinessBase();
-            stopwatch.Stop();
-
-            Console.WriteLine($"RemoteFactory Total Count: {RemoteFactoryCSLABusinessBase.TotalCount}");
-            Console.WriteLine($"RemoteFactory Elapsed Time: {stopwatch.ElapsedMilliseconds} ms");
-
-            stopwatch.Reset();
-            stopwatch.Start();
-            totalCount = benchmarks.NeatooEditBase();
+            benchmarks.NeatooEditBase();
+            totalCount = NeatooEditBase.TotalCount;
             stopwatch.Stop();
 
             Console.WriteLine($"NeatooEditBase Total Count: {NeatooEditBase.TotalCount}");
@@ -46,7 +40,8 @@ namespace RemoteFactoryCSLA
 
             stopwatch.Reset();
             stopwatch.Start();
-            totalCount = benchmarks.DIOnly();
+            benchmarks.DIOnly();
+            totalCount = DIOnly.TotalCount;
             stopwatch.Stop();
 
             Console.WriteLine($"DIOnly Total Count: {totalCount}");
@@ -54,7 +49,8 @@ namespace RemoteFactoryCSLA
 
             stopwatch.Reset();
             stopwatch.Start();
-            totalCount = benchmarks.ConstructorOnly();
+            benchmarks.ConstructorOnly();
+            totalCount = Constructor.TotalCount;
             stopwatch.Stop();
 
             Console.WriteLine($"ConstructorOnly Total Count: {totalCount}");
@@ -62,7 +58,8 @@ namespace RemoteFactoryCSLA
 
             stopwatch.Reset();
             stopwatch.Start();
-            totalCount = benchmarks.ActivatorCreateInstance();
+            benchmarks.ActivatorCreateInstance();
+            totalCount = ActivatorCreateInstance.TotalCount;
             stopwatch.Stop();
 
             Console.WriteLine($"ActivatorCreateInstance Total Count: {totalCount}");
