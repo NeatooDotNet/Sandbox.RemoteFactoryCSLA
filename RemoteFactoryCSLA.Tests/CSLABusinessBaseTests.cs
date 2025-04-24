@@ -29,7 +29,7 @@ namespace RemoteFactoryCSLA.Tests
             var factory = serviceProvider.GetRequiredService<IDataPortalFactory>();
             var cslaBBFactory = factory.GetPortal<CSLABusinessBase>();
 
-            // var mockDP = new Mock<INeatooEditBaseFactory>(MockBehavior.Strict);
+            // var mockDP = new Mock<IDataPortal<CSLABusinessBase>>(MockBehavior.Strict);
             // mockDP.Setup(x => x.Create(2)).Returns(Mock.Of<CSLABusinessBase>());
 
             // Right now this returns all 32k objects which is not ok
