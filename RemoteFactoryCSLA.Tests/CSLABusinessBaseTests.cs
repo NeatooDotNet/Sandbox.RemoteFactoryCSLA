@@ -24,7 +24,10 @@ namespace RemoteFactoryCSLA.Tests
             serviceCollection.AddSingleton(cc => mockDP.Object);
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
-            
+
+            // This is the Mock<IDataPortal<CSLABusinessBase>> which is not what I want
+            // How do I get an actual IDataPortal<CSLABusinessBase> right here
+            // but have CSLABusinessBase.Create([Inject] IDataPortal<CSLABusinessBase> factory) use a mock??
             var cslaBBFactory = serviceProvider.GetService<IDataPortal<CSLABusinessBase>>();
 
             mockDP.Setup(x => x.Create(2)).Returns(Mock.Of<CSLABusinessBase>());
