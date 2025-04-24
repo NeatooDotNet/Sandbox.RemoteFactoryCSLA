@@ -28,6 +28,7 @@ namespace RemoteFactoryCSLA.Tests
             var factory = serviceProvider.GetRequiredService<IDataPortalFactory>();
             var cslaBBFactory = factory.GetPortal<CSLABusinessBase>();
 
+            // Right now this returns all 32k objects which is not ok
             // How do I moq IDataPortal<CSLABusinessBase>???
             var cslaBB = cslaBBFactory.Create();
         }
